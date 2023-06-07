@@ -6,6 +6,21 @@ const body = document.querySelector('body');
 
 body.append(input, p);
 
-input.addEventListener('change', () => {
-    setTimeout(() => { p.textContent = input.value}, 300);
-})
+function debounce( callback, delay ) {
+    let timeout;
+    return function() {
+        clearTimeout( timeout );
+        timeout = setTimeout( callback, delay );
+    }
+}
+
+const myInput = document.querySelector("input");
+
+function changeValue() {
+    p.textContent = input.value;
+}
+
+myInput.addEventListener(
+    "keyup",
+    debounce( changeValue, 300 )
+);
